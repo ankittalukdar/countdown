@@ -16,29 +16,51 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      min-height: 100vh;
       text-align: center;
-      overflow: hidden;
+      padding: 1rem;
+      box-sizing: border-box;
     }
 
-    h1 {
-      font-size: 3rem;
+    .party-header {
+      line-height: 1.2;
       margin-bottom: 1rem;
-      color: #fff700;
+    }
+
+    .party-header div {
+      font-size: 2rem;
+      font-weight: bold;
       text-shadow: 2px 2px #ff00b3;
+      color: #fff700;
+    }
+
+    .party-header .line1 {
+      font-size: 2.2rem;
+    }
+
+    .party-header .line2 {
+      font-size: 2.5rem;
+      color: #ff00f2;
+    }
+
+    .party-header .line3 {
+      font-size: 2.3rem;
+      color: #00ffe5;
     }
 
     p.address {
-      font-size: 1.25rem;
+      font-size: 1.1rem;
       color: #ffe;
       margin-bottom: 2rem;
     }
 
     #countdown {
       display: flex;
-      gap: 2rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
       font-family: 'Luckiest Guy', cursive;
-      font-size: 2.5rem;
+      font-size: 2rem;
     }
 
     .time-box {
@@ -46,14 +68,15 @@
       flex-direction: column;
       align-items: center;
       background: linear-gradient(135deg, #8e44ad, #3498db);
-      padding: 1rem 1.5rem;
+      padding: 1rem;
       border-radius: 16px;
       box-shadow: 0 0 25px rgba(255, 255, 255, 0.4);
       perspective: 1000px;
+      width: 80px;
     }
 
     .time-box span {
-      font-size: 3.2rem;
+      font-size: 2.5rem;
       display: inline-block;
       transition: transform 0.6s ease;
       transform-style: preserve-3d;
@@ -66,14 +89,47 @@
     }
 
     .label {
-      font-size: 1rem;
+      font-size: 0.9rem;
       color: #fefefe;
-      margin-top: 0.5rem;
+      margin-top: 0.3rem;
+    }
+
+    @media (min-width: 600px) {
+      .party-header .line1 {
+        font-size: 2.8rem;
+      }
+      .party-header .line2 {
+        font-size: 3.2rem;
+      }
+      .party-header .line3 {
+        font-size: 3rem;
+      }
+      p.address {
+        font-size: 1.25rem;
+      }
+      #countdown {
+        gap: 2rem;
+        font-size: 2.5rem;
+      }
+      .time-box {
+        width: auto;
+        padding: 1rem 1.5rem;
+      }
+      .time-box span {
+        font-size: 3.2rem;
+      }
+      .label {
+        font-size: 1rem;
+      }
     }
   </style>
 </head>
 <body>
-  <h1>🎉 Prantik & Subham's <br> EPIC MEGA ULTRA <br> Birthdaaaayyyy Partaaayyyy 🎉</h1>
+  <div class="party-header">
+    <div class="line1">Subham and Prantik</div>
+    <div class="line2">ULTRA MEGA</div>
+    <div class="line3">Birthday Party</div>
+  </div>
   <p class="address">📍 Address: Mystique Homestay, Bylane No. 3, Chandan Nagar, Beltola</p>
 
   <div id="countdown">
@@ -139,6 +195,15 @@
 
     setInterval(updateCountdown, 1000);
     updateCountdown();
+
+    // Confetti every 2 seconds
+    setInterval(() => {
+      confetti({
+        particleCount: 100,
+        spread: 120,
+        origin: { y: 0.6 },
+      });
+    }, 2000);
   </script>
 </body>
 </html>
