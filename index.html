@@ -2,21 +2,143 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Countdown Timer</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Birthday Countdown</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500&family=Luckiest+Guy&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      background: linear-gradient(to right, #ff5f6d, #ffc371);
+      color: #fff;
+      font-family: 'Fredoka', sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      color: #fff700;
+      text-shadow: 2px 2px #ff00b3;
+    }
+
+    p.address {
+      font-size: 1.25rem;
+      color: #ffe;
+      margin-bottom: 2rem;
+    }
+
+    #countdown {
+      display: flex;
+      gap: 2rem;
+      font-family: 'Luckiest Guy', cursive;
+      font-size: 2.5rem;
+    }
+
+    .time-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: linear-gradient(135deg, #8e44ad, #3498db);
+      padding: 1rem 1.5rem;
+      border-radius: 16px;
+      box-shadow: 0 0 25px rgba(255, 255, 255, 0.4);
+      perspective: 1000px;
+    }
+
+    .time-box span {
+      font-size: 3.2rem;
+      display: inline-block;
+      transition: transform 0.6s ease;
+      transform-style: preserve-3d;
+      color: #ffeb3b;
+      text-shadow: 2px 2px #000;
+    }
+
+    .flip {
+      transform: rotateX(360deg);
+    }
+
+    .label {
+      font-size: 1rem;
+      color: #fefefe;
+      margin-top: 0.5rem;
+    }
+  </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Birthday Party!</h1>
-    <h2>Address: Bylane No 3, Chandan Nagar, Beltola </h2>
-    <div id="countdown">
-      <div><span id="days">00</span><p>Days</p></div>
-      <div><span id="hours">00</span><p>Hours</p></div>
-      <div><span id="minutes">00</span><p>Minutes</p></div>
-      <div><span id="seconds">00</span><p>Seconds</p></div>
+  <h1>🎉 Prantik & Subham's <br> EPIC MEGA ULTRA <br> Birthdaaaayyyy Partaaayyyy 🎉</h1>
+  <p class="address">📍 Address: Mystique Homestay, Bylane No. 3, Chandan Nagar, Beltola</p>
+
+  <div id="countdown">
+    <div class="time-box">
+      <span id="days">00</span>
+      <div class="label">Days</div>
+    </div>
+    <div class="time-box">
+      <span id="hours">00</span>
+      <div class="label">Hours</div>
+    </div>
+    <div class="time-box">
+      <span id="minutes">00</span>
+      <div class="label">Minutes</div>
+    </div>
+    <div class="time-box">
+      <span id="seconds">00</span>
+      <div class="label">Seconds</div>
     </div>
   </div>
-  <script src="script.js"></script>
+
+  <script>
+    const targetDate = new Date("April 12, 2025 19:00:00").getTime();
+
+    const flipIfChanged = (id, newVal) => {
+      const el = document.getElementById(id);
+      if (el.textContent !== newVal.toString()) {
+        el.classList.add('flip');
+        el.textContent = newVal;
+        setTimeout(() => el.classList.remove('flip'), 600);
+      }
+    };
+
+    const updateCountdown = () => {
+      const now = new Date().getTime();
+      const gap = targetDate - now;
+
+      if (gap <= 0) {
+        document.getElementById("countdown").innerHTML = "🎊 It's party time! 🎊";
+        confetti({
+          particleCount: 300,
+          spread: 180,
+          origin: { y: 0.6 },
+        });
+        return;
+      }
+
+      const seconds = 1000;
+      const minutes = seconds * 60;
+      const hours = minutes * 60;
+      const days = hours * 24;
+
+      const d = Math.floor(gap / days);
+      const h = Math.floor((gap % days) / hours);
+      const m = Math.floor((gap % hours) / minutes);
+      const s = Math.floor((gap % minutes) / seconds);
+
+      flipIfChanged("days", d);
+      flipIfChanged("hours", h.toString().padStart(2, '0'));
+      flipIfChanged("minutes", m.toString().padStart(2, '0'));
+      flipIfChanged("seconds", s.toString().padStart(2, '0'));
+    };
+
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+  </script>
 </body>
 </html>
